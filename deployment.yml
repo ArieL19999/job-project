@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: job-project
+  template:
+    metadata:
+      labels:
+        app: job-project
+    spec:
+      containers:
+      - name: mjob-project-1
+        image: pnb20/nginx1
+        ports:
+        - containerPort: 80
