@@ -13,6 +13,10 @@ Basic knowledge of Terraform, AWS services, and NGINX.
 Infrastructure Setup
 Terraform Initialization:
 
+Before starting, ensure you are authenticated with AWS.
+Use the AWS CLI to log in to your AWS account.
+Configure your AWS credentials by running aws configure. This will prompt you to enter your AWS Access Key ID, Secret Access Key, and default region.
+
 Navigate to the directory containing your Terraform files.
 Run terraform init to initialize the workspace.
 
