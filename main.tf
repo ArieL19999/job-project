@@ -1,4 +1,5 @@
 
+# Defining an AWS EC2 instance resource
 resource "aws_instance" "instance" {
   ami                     = "ami-0669b163befffbdfc"
   instance_type           = "t2.large"
@@ -11,14 +12,17 @@ resource "aws_instance" "instance" {
   }
 }
 
+# Allocate an Elastic IP (EIP) for the instance
 resource "aws_eip" "my_eip" {
 }
 
+# Associate the EIP with the EC2 instance
 resource "aws_eip_association" "eip_assoc" {
   instance_id   = aws_instance.instance.id
   allocation_id = aws_eip.my_eip.id
 }
 
+# Associate the EIP with the EC2 instance
 resource "aws_security_group" "instance_sg" {
   name        = "instance_sg"
   description = "Security group for Kubernetes EC2 instance"
@@ -53,6 +57,7 @@ resource "aws_security_group" "instance_sg" {
 
 }
 
+# Defining an AWS VPC resource
 resource "aws_vpc" "my_vpc" {
   cidr_block = var.cidr
   enable_dns_support   = true
@@ -63,6 +68,7 @@ resource "aws_vpc" "my_vpc" {
   }
 }
 
+# Create an Internet Gateway and attach it to the VPC
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.my_vpc.id
 
@@ -71,6 +77,7 @@ resource "aws_internet_gateway" "igw" {
   }
 }
 
+# Define a route table for the VPC
 resource "aws_route_table" "route" {
   vpc_id = aws_vpc.my_vpc.id
 
@@ -80,12 +87,13 @@ resource "aws_route_table" "route" {
   }
 }
 
+# Associate the route table with the public subnet
 resource "aws_route_table_association" "public_assoc" {
   subnet_id      = aws_subnet.public_sub.id
   route_table_id = aws_route_table.route.id
 }
 
-
+# public subnet within the VPC
 resource "aws_subnet" "public_sub" {
   vpc_id                  = aws_vpc.my_vpc.id
   cidr_block              = "10.0.1.0/24"
@@ -98,6 +106,7 @@ resource "aws_subnet" "public_sub" {
 
 }
 
+# private subnet within the VPC
 resource "aws_subnet" "private_sub" {
   vpc_id                  = aws_vpc.my_vpc.id
   cidr_block              = "10.0.2.0/24"
