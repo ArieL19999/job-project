@@ -11,6 +11,7 @@ AWS account with proper access rights.
 Terraform installed on your local machine.
 Basic knowledge of Terraform, AWS services, and NGINX.
 Infrastructure Setup
+
 Terraform Initialization:
 
 Before starting, ensure you are authenticated with AWS.
